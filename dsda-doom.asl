@@ -1,3 +1,32 @@
+// Define states to provide memory addresses for different versions of dsda-doom
+// To allow compatibility for a new version of dsda-doom an associated state block must be added 
+state("dsda-doom", "0.30.1") {
+    int gametic: 0x9AE3B0;
+    int gamestate: 0x863BB4;
+    int map: 0x760EE4;
+    int attempt: 0x740728;
+    int isMenuOpen: 0x876970;
+    int isDemoPlaying: 0x9D24A4;
+}
+
+state("dsda-doom", "0.30.0") {
+    int gametic: 0x99A810;
+    int gamestate: 0x850374;
+    int map: 0x750DF4;
+    int attempt: 0x730728;
+    int isMenuOpen: 0x862E10;
+    int isDemoPlaying: 0x9BE904;
+}
+
+state("dsda-doom", "0.29.4") {
+    int gametic: 0xAEDB90;
+    int gamestate: 0x9A2C2C;
+    int map: 0x8A1244;
+    int attempt: 0x881728;
+    int isMenuOpen: 0xB0F74C;
+    int isDemoPlaying: 0xB11C78;
+}
+
 state("dsda-doom", "0.29.3") {
     int gametic: 0xB11090;
     int gamestate: 0x88BE90;
@@ -23,6 +52,29 @@ state("dsda-doom", "0.28.3") {
     int attempt: 0x810ad0;
     int isMenuOpen: 0x98E7DC;
     int isDemoPlaying: 0x990BE8;
+}
+
+init
+{ 
+	// Autodetect dsda-doom version based on memory size of its main process
+	// This is used to determine the state (memory addresses) to use
+    // To allow compatibility for a new version of dsda-doom an associated else if block must be added
+    // If a compatible version is not detected the default state will be used (that at the head of this file)
+	string memory_size = Convert.ToString(modules.First().ModuleMemorySize, 16);
+	print("dsda-doom memory size is: " + memory_size);
+	if (memory_size == "a1e000")
+        version = "0.28.3";
+	else if (memory_size == "a30000")
+        version = "0.29.0";
+	else if (memory_size == "bcd000")
+        version = "0.29.3";
+	else if (memory_size == "bc0000")
+        version = "0.29.4";
+	else if (memory_size == "a6c000")
+        version = "0.30.0";
+	else if (memory_size == "a7f000")
+        version = "0.30.1";
+	print("dsda-doom version: " + version + " detected.");
 }
 
 startup {
