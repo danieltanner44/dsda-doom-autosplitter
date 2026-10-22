@@ -8,7 +8,10 @@
 // dsda-doom State Definitions
 //   [Doom and Doom II Only]
 // ===========================
-// 
+
+// ===========================
+// dsda-doom State Definitions
+// ===========================
 state("dsda-doom", "dsda-doom_0.30.1") {
     int gametic: 0x9AE3B0;
     int gamestate: 0x863BB4;
@@ -23,7 +26,7 @@ state("dsda-doom", "dsda-doom_0.30.0") {
     int gamestate: 0x850374;
     int map: 0x750DF4;
     int attempt: 0x730728;
-    int isMenuOpen: 0x862E10;
+    int isMenuOpen: 0x9BC3EC;
     int isDemoPlaying: 0x9BE904;
 }
 
@@ -55,10 +58,10 @@ state("dsda-doom", "dsda-doom_0.29.0") {
 }
 
 state("dsda-doom", "dsda-doom_0.28.3") {
-    int gametic: 0x96ca90;
-    int gamestate: 0x71fef0;
-    int map: 0x71d114;
-    int attempt: 0x810ad0;
+    int gametic: 0x96CA90;
+    int gamestate: 0x71FEF0;
+    int map: 0x71D114;
+    int attempt: 0x810AD0;
     int isMenuOpen: 0x98E7DC;
     int isDemoPlaying: 0x990BE8;
 }
@@ -95,18 +98,6 @@ state("nyan-doom", "nyan-doom_1.6.2") {
     int isMenuOpen: 0xA5E5AC;
     int isDemoPlaying: 0xA60CE4;
 }
-
-// =============================
-// crispy-doom State Definitions
-// =============================
-//state("crispy-doom", "crispy-doom_7.2.0") {
-//    int gametic: 0x;
-//    int gamestate: 0x;
-//    int map: 0x;
-//    int attempt: 0x;
-//    int isMenuOpen: 0x;
-//    int isDemoPlaying: 0x;
-//}
 
 init
 { 
@@ -146,12 +137,6 @@ init
     else if (process_name == "nyan-doom.exe") {
         if (memory_size == "b46000")
             version = "nyan-doom_1.6.2";
-        }
-
-    // crispy-doom logic block
-    else if (process_name == "crispy-doom.exe") {
-        if (memory_size == "XXXXXX")
-            version = "crispy-doom_7.2.0";
         }
 
     print(process_name + " version: " + version + " with memory size: " + memory_size + " detected.");

@@ -26,19 +26,6 @@ Note: the autosplitter will autodetect the SourcePort in use and the specific ve
 I recommend not showing milliseconds on your timer or splits. The auto splitter truncates the milliseconds
 so it matches movie runs.
 
-## Bugs / Issues / Feature Requests
-Please raise features as issues in the project Github Repository here:
-https://github.com/danieltanner44/dsda-doom-autosplitter
-
-If bugs or issues are encountered in the use of the autosplitter please report them to ensure they can be assessed and remedied.
-In reporting any issues please include:
-1. The Version number of the autosplitter script used (this is contained in the header of the Doom-SourcePort-Autosplitter.asl). If none is present please provide the file size
-2. The SourcePort used (e.g., dsda-doom, woof, nyan-doom, crispy-doom). Note: please ensure it is a compatible version from the list in the associated readme file
-3. The version of the SourcePort used (e.g., 0.30.1, 1.6.2)
-4. The version of LiveSplit used (e.g., 1.8.37)
-5. A brief description of what happened - the setup you were using, SourcePort launch commands, how it was progressing, what when wrong, anthing additional you noticed, etc. 
-6. Any additional supporting information, e.g., a demo file of the run that glitched (this would be particularly helpful), what WAD was in use, any unusual settings or tools in use, etc.? 
-
 ## Updating the autosplitter
 For the autosplitter to be compatible with a specific release of a SourcePort the autosplitter script must contain the configuration information associated with that release. This section provides information about how to update the autosplitter to work with additional SourcePort versions. This is achieved by updating two key sections of the Doom-SourcePort-Autosplitter.asl file, namely:
 1. State Block Definition - Adding the associated state block for the new SourcePort verion (providing the memory addresses for that version)
@@ -115,10 +102,10 @@ Each version of a SourcePort requires the associated version logic to be present
 ## Testing
 Any changes to the autosplitter script should be tested to ensure basic functionality is maintained.
 
-## Demo Playback Testing
+### Demo Playback Testing
 In order to test any updates to the .asl file one way to check basic functionality is to playback fullgame demos and check the timings match what is expected. In order to support such testing some files have been provided in the repository, in a folder called testing, namely:
 
-### Doom 1 Testing
+#### Doom 1 Testing
 Testing Files are located in the folder: /Testing/D1ALL
 The included files are:
 1. ud1allm7653.lmp - A demo file for test purposes, which contains a complete D1ALL UV-Max demo run of The Ultimate Doom (4 Episodes - uses the -chain_episodes command)
@@ -126,7 +113,7 @@ The included files are:
 3. D1-D1ALL_Splits.lss - A LiveSplit splits definition file for The Ultimate Doom
 4. D1-D1ALL_Test_Data.txt - A Test Results file of the expected timing splits and total time that should be captured, with some additional details about the origins of the run itself
 
-### Doom 2 Testing
+#### Doom 2 Testing
 Testing Files are located in the folder: /Testing/D2ALL
 The included files are:
 1. 30uv7128.lmp - A demo file for test purposes, which contains a complete D2ALL UV-Max demo run of Doom II
@@ -140,17 +127,20 @@ To undertake demo playback testing do the following:
 3. Load the LiveSplit Splits file: In LiveSplit use "Open Splits" -> "From File" and select the test splits file
 4. Update LiveSplit to point to the new .asl file that is under test. For this do the following in LiveSplit: "Edit Layout" -> "Add" -> "Control" -> "Scriptable Auto Splitter" -> Point it at the new .asl file.
 5. Now launch the SourcePort you are testing with, where it is set to playback the test demo file. The commands are similar for different SourcePorts, open a command window in the SourcePort root folder and excute the relevant command, something like:
-+ dsda-doom: "dsda-doom -iwad doom.wad -warp 1 1 -playdemo ud1allm7653.lmp"
-+ dsda-doom: "dsda-doom -iwad doom2.wad -warp 01 -playdemo 30uv7128.lmp"
-+ woof: "woof -iwad doom.wad -warp 1 1 -playdemo ud1allm7653.lmp"
-+ woof: "woof -iwad doom2.wad -warp 01 -playdemo 30uv7128.lmp"
-+ nyan-doom: "nyan-doom -iwad doom.wad -warp 1 1 -playdemo ud1allm7653.lmp"
-+ nyan-doom: "nyan-doom -iwad doom2.wad -warp 01 -playdemo 30uv7128.lmp"
++ dsda-doom: "dsda-doom -iwad doom.wad -playdemo ud1allm7653.lmp"
++ dsda-doom: "dsda-doom -iwad doom2.wad -playdemo 30uv7128.lmp"
++ woof: "woof -iwad doom.wad -playdemo ud1allm7653.lmp"
++ woof: "woof -iwad doom2.wad -playdemo 30uv7128.lmp"
++ nyan-doom: "nyan-doom -iwad doom.wad -playdemo ud1allm7653.lmp"
++ nyan-doom: "nyan-doom -iwad doom2.wad -playdemo 30uv7128.lmp"
 Note: the doom.wad / doom2.wad and the ud1allm7653.lmp / 30uv7128.lmp demo files need to be either in the SourcePort root directory or full paths must be used.
 6. As the demo plays check that the splits for each map match those recorded in the Test Results file (D1-D1ALL_Test_Data.txt / D2-D2ALL_Test_Data.txt). In particular, check that the total demo time at the end matches, i.e., 01:16:53 or 01:11:28 (HH:MM:SS).
-Note: to speed up this process the game speed can be increased (up to 10,000 in dsda-doom and nyan-doom or 1,000 in woof). It would also be worth toggling the menu / pause screens to check that once active the timer stops as expected and the map splits are unaffected. 
+Note: to speed up this process the game speed can be increased (up to 10,000 in dsda-doom and nyan-doom or 1,000 in woof). It would also be worth toggling the menu / pause screens to check that once active the timer stops as expected and the map splits are unaffected.
+7. Finally, the following two checks must be undertaken as they are not covered by D1ALL or D2ALL playback tests:
++ The attempt variable - testing the reset function. Resetting Doom should also reset the timer and LiveSplit should restart on initial segment (when recording a demo)
++ The isMenuOpen variable - the LiveSplit counter should stop incrementing when Doom pauses or menu is open. Although this is inherent to Doom but might be worth checking anyway as menu actions are not recorded in demos
 
-## General Testing
+#### General Testing
 Apart from Demo Playback Testing it may be helpful to undertake general sandpit testing steps to explore that new changes are performing as expected. The following are good general areas to cover:
 + Map ID - Check that LiveSplit displays the correct map and that maps advance as expected as each is complete
 + Menu - Press Esc to call the in-game menu - ensure the timer stops when on the menu screen and continues once the menu is closed again
@@ -158,6 +148,20 @@ Apart from Demo Playback Testing it may be helpful to undertake general sandpit 
 + Intermission - ensure the timer stops on the end of map intermission screen and continues on the subsequent map
 + Attempt - Restart a run on the first map and check that LiveSplit resets the timer to zero
 Note: testing is aimed at testing the autosplitter functionality and not LiveSplit itself.
+
+## Bugs / Issues / Feature Requests
+Please raise features as issues in the project Github Repository.
+
+If bugs or issues are encountered in the use of the autosplitter please report them to ensure they can be assessed and remedied.
+In reporting any issues please include:
+
+| :---: | :--- | :--- |
+| 1. | Autosplitter Version | The Version number of the autosplitter script used (this is contained in the header of the Doom-SourcePort-Autosplitter.asl). If none is present please provide the file size |
+| 2. | SourcePort Used | The SourcePort used (e.g., dsda-doom, woof, nyan-doom, crispy-doom). Note: please ensure it is a compatible version from the list in the associated readme file |
+| 3. | SourcePort Version | The version of the SourcePort used (e.g., 0.30.1, 1.6.2) |
+| 4. | LiveSplit Version | The version of LiveSplit used (e.g., 1.8.37) |
+| 5. | Background | A brief description of what happened - the setup you were using, SourcePort launch commands, how it was progressing, what when wrong, anthing additional you noticed, etc.  |
+| 6. | Additional Info | Any additional supporting information, e.g., a demo file of the run that glitched (this would be particularly helpful), what WAD was in use, any unusual settings or tools in use, etc.? |
 
 ## ASL and Troubleshooting
 This section provide a brief overview of the functional blocks in the ASL code as well as a guide on what variables may be linked to issues that are present. 
