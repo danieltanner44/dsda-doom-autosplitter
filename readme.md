@@ -13,7 +13,7 @@ Note: the autosplitter will autodetect the SourcePort in use and the specific ve
 | 0.28.3 |  |  |
 
 ## Usage
-1. Download [Doom-SourcePort-Autosplitter.asl](https://raw.githubusercontent.com/Krankdud/dsda-doom-autosplitter/main/Doom-SourcePort-Autosplitter.asl)
+1. Download [Doom-SourcePort-Autosplitter.asl](https://github.com/danieltanner44/dsda-doom-autosplitter/blob/main/Doom-SourcePort-Autosplitter.asl)
 2. Add the *Scriptable Auto Splitter* component to your layout
 3. Set the script path for the auto splitter component to where Doom-SourcePort-Autosplitter.asl is located
 4. Set LiveSplit to compare against game time
