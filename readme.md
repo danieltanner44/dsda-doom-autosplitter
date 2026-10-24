@@ -26,7 +26,8 @@ Note: the autosplitter will autodetect the SourcePort in use and the specific ve
 I recommend not showing milliseconds on your timer or splits. The auto splitter truncates the milliseconds
 so it matches movie runs.
 
-## Updating the autosplitter
+<details>
+<summary>## Updating the autosplitter</summary>
 For the autosplitter to be compatible with a specific release of a SourcePort the autosplitter script must contain the configuration information associated with that release. This section provides information about how to update the autosplitter to work with additional SourcePort versions. This is achieved by updating two key sections of the Doom-SourcePort-Autosplitter.asl file, namely:
 1. State Block Definition - Adding the associated state block for the new SourcePort verion (providing the memory addresses for that version)
 2. Version Detection - Adding the SourcePort memory size and updating the associated logic to enable auto-detection of the added SourcePort version
@@ -56,10 +57,10 @@ Game state:
 2. Exit the map and while in the intermission, search for a 1.
 3. Go to the next map, search for a 0.
 4. Repeat until you find the game state address.
-Note: some memory addresses do not change to 1 when on the episode completion intermission screen - choose one that does change to 1
+Note: some memory addresses do not change to 2 when on the episode completion intermission screen - choose one of them
 
 Map:
-1. Start in map01 and search for a 1 as a four byte value.
+1. Start in Map01 and search for a 1 as a four byte value.
 2. Go to some other map, search for that map number
 3. Repeat until you find the map address.
 Note: use IDCLEV cheat or "Previous Level" / "Next Level" keybinds to jump to different maps when searching for valid memory addresses 
@@ -83,6 +84,19 @@ Note: when the demo lump is playing back choose a memory address that goes to 0 
 
 The memory addresses go into the state block at the top of dsda-doom.asl.
 If the addresses in Cheat Engine show up as "dsda-doom"+#######, use the value after the plus in the script.
+Note: all memory addresses for compatible ports have been saved from Cheat Engine to cheat table files and stored in the following folder:
+\dsda-doom-autosplitter\Cheat_Engine-Memory_Addresses
+This contains the following cheat table files:
++ dsda-doom_0.30.1.CT
++ dsda-doom_0.30.0.CT
++ dsda-doom_0.29.4.CT
++ dsda-doom_0.29.3.CT
++ dsda-doom_0.29.0.CT
++ dsda-doom_0.28.3.CT
++ nyan-doom_1.6.2.CT
++ woof_32_16.0.0.CT
++ woof_64_16.0.0.CT
+Note: the memory addresses used in the latest state definitons are appended with an * in their respective descriptions.
 
 ### Adding Version Detection
 The autosplitter script needs to identify the version of SourcePort that is in use, so the correct state block (memory locations) are used. The script allows automatic identifion of the SourcePort and its version by determining the memory size of the main SourcePort process. To add compatibility for an additional SourcePort versions the memory size of its process must be determined. To update this follow these two steps:
@@ -98,15 +112,24 @@ Find SourcePort main process memory size:
 4. In the debug viewer look for the line "PROCESS_NAME memory size is: XXXXXX", here the XXXXXX is the string that encodes the required memory size and PROCESS_NAME will be the name of the SourcePort executable (e.g., dsda-doom.exe)
 
 Each version of a SourcePort requires the associated version logic to be present in the Doom-SourcePort-Autosplitter.asl file.
+</details>
 
-## Testing
+<details>
+<summary>## Testing</summary>
 Any changes to the autosplitter script should be tested to ensure basic functionality is maintained.
+
+### Testing in LiveSplit
+A helpful asl script was created that prints out various variables from memory addresses of interest. This was very valuable in tracking down recent issues by printing the gamestate variables for 20 subsequent loops, once triggered. This can be easily adapted to help investigate issues with other variables.
+It is located in the folder: \dsda-doom-autosplitter\Testing
+The test script file is called:
++ Testing_Script.asl
 
 ### Demo Playback Testing
 In order to test any updates to the .asl file one way to check basic functionality is to playback fullgame demos and check the timings match what is expected. In order to support such testing some files have been provided in the repository, in a folder called testing, namely:
 
 #### Doom 1 Testing
 Testing Files are located in the folder: /Testing/D1ALL
+The related files are in the folder: \dsda-doom-autosplitter\Testing\D1ALL
 The included files are:
 1. ud1allm7653.lmp - A demo file for test purposes, which contains a complete D1ALL UV-Max demo run of The Ultimate Doom (4 Episodes - uses the -chain_episodes command)
 2. D1-D1ALL_Layout.lsl - A LiveSplit layout file for an D1ALL of The Ultimate Doom
@@ -115,12 +138,21 @@ The included files are:
 
 #### Doom 2 Testing
 Testing Files are located in the folder: /Testing/D2ALL
+The related files are in the folder: \dsda-doom-autosplitter\Testing\D2ALL
 The included files are:
 1. 30uv7128.lmp - A demo file for test purposes, which contains a complete D2ALL UV-Max demo run of Doom II
 2. D2-D2ALL_Layout.lsl - A LiveSplit layout file for an D2ALL of Doom II
 3. D2-D2ALL_Splits.lss - A LiveSplit splits definition file for Doom II
 4. D2-D2ALL_Test_Data.txt - A Test Results file of the expected timing splits and total time that should be captured, with some additional details about the origins of the run itself
 
+#### Teleporter Bug Testing
+In testing the implementations for certain SourcePorts a phantom split trigger in LiveSplit was encountered. Following an investigation it was found that one of the gamestate memory addresses in dsda-doom flips on teleporting and can lead to a phantom split (if LiveSplit polls memory at that time). To provide a rigorous testcase for this a map was created with a single teleport and a 50+min demo created of continuous teleporting. This demo can be played back in order to provoke any associated gamestate values issues.
+The related files are in the folder: \dsda-doom-autosplitter\Testing\Teleport_Bug
+The included files are: 
+1. Phantom_Split.WAD - the map to create continuous teleporting
+2. phantom_split_demo50min.lmp - the 50min demo with over 5,000 instances of teleporting
+
+#### Playback Testing
 To undertake demo playback testing do the following:
 1. Launch LiveSplit
 2. Load the LiveSplit Layout file: In LiveSplit use "Open Layout" -> "From File" and select the test layout file
@@ -148,27 +180,29 @@ Apart from Demo Playback Testing it may be helpful to undertake general sandpit 
 + Intermission - ensure the timer stops on the end of map intermission screen and continues on the subsequent map
 + Attempt - Restart a run on the first map and check that LiveSplit resets the timer to zero
 Note: testing is aimed at testing the autosplitter functionality and not LiveSplit itself.
+</details>
 
-## Bugs / Issues / Feature Requests
+<details>
+<summary>## Bugs / Issues / Feature Requests</summary>
 Please raise features as issues in the project Github Repository.
 
 If bugs or issues are encountered in the use of the autosplitter please report them to ensure they can be assessed and remedied.
 In reporting any issues please include:
 
 | :---: | :--- | :--- |
-| 1. | Autosplitter Version | The Version number of the autosplitter script used (this is contained in the header of the Doom-SourcePort-Autosplitter.asl). If none is present please provide the file size |
-| 2. | SourcePort Used | The SourcePort used (e.g., dsda-doom, woof, nyan-doom, crispy-doom). Note: please ensure it is a compatible version from the list in the associated readme file |
-| 3. | SourcePort Version | The version of the SourcePort used (e.g., 0.30.1, 1.6.2) |
-| 4. | LiveSplit Version | The version of LiveSplit used (e.g., 1.8.37) |
-| 5. | Background | A brief description of what happened - the setup you were using, SourcePort launch commands, how it was progressing, what when wrong, anthing additional you noticed, etc.  |
-| 6. | Additional Info | Any additional supporting information, e.g., a demo file of the run that glitched (this would be particularly helpful), what WAD was in use, any unusual settings or tools in use, etc.? |
+| 1.    | Autosplitter Version | The Version number of the autosplitter script used (this is contained in the header of the Doom-SourcePort-Autosplitter.asl). If none is present please provide the file size |
+| 2.    | SourcePort Used | The SourcePort used (e.g., dsda-doom, woof, nyan-doom, crispy-doom). Note: please ensure it is a compatible version from the list in the associated readme file |
+| 3.    | SourcePort Version | The version of the SourcePort used (e.g., 0.30.1, 1.6.2) |
+| 4.    | LiveSplit Version | The version of LiveSplit used (e.g., 1.8.37) |
+| 5.    | Background | A brief description of what happened - the setup you were using, SourcePort launch commands, how it was progressing, what when wrong, anthing additional you noticed, etc.  |
+| 6.    | Additional Info | Any additional supporting information, e.g., a demo file of the run that glitched (this would be particularly helpful), what WAD was in use, any unusual settings or tools in use, etc.? |
 
 ## ASL and Troubleshooting
 This section provide a brief overview of the functional blocks in the ASL code as well as a guide on what variables may be linked to issues that are present. 
 
 ### Intro to ASL Blocks
-| asl block          | Description |
-| :---              |     :---:      |
+| asl block             | Description       |
+| :---                  |     :---:         |
 | startup | This block is executed a single time when the asl script is first loaded, i.e., when the game process is detected |
 | start | This is executed on every loop until it evaluates to True and the LiveSplit timer is started. This contains the start logic |
 | init | This runs once when the game process is picked up by LiveSplit. The game dependent logic can be set here |
@@ -195,3 +229,4 @@ This section may help point in the right direction if issues are encountered, pa
 | LiveSplit does not split on map exit | gamestate | The gamestate transistion from map to intermission screen (0 -> 1) indicates map exit and action to split |
 | LiveSplit splits at an unexpected time | gamestate | The gamestate transistion from map to intermission screen (0 -> 1) incorrectly detected |
 | LiveSplit unexpectedly resets | attempts | LiveSplit resets when the attempts number increments, i.e., when current.attempt > old.attempt |
+</details>

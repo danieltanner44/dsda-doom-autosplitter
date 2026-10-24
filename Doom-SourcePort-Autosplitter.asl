@@ -14,7 +14,7 @@
 // ===========================
 state("dsda-doom", "dsda-doom_0.30.1") {
     int gametic: 0x9AE3B0;
-    int gamestate: 0x863BB4;
+    int gamestate: 0x763C48;
     int map: 0x9D2280;
     int attempt: 0x848BE8;
     int isMenuOpen: 0x9CFF8C;
@@ -23,7 +23,7 @@ state("dsda-doom", "dsda-doom_0.30.1") {
 
 state("dsda-doom", "dsda-doom_0.30.0") {
     int gametic: 0x99A810;
-    int gamestate: 0x850374;
+    int gamestate: 0x753B58;
     int map: 0x750DF4;
     int attempt: 0x730728;
     int isMenuOpen: 0x9BC3EC;
@@ -32,7 +32,7 @@ state("dsda-doom", "dsda-doom_0.30.0") {
 
 state("dsda-doom", "dsda-doom_0.29.4") {
     int gametic: 0xAEDB90;
-    int gamestate: 0x9A2C2C;
+    int gamestate: 0x8A3FA8;
     int map: 0x8A1244;
     int attempt: 0x881728;
     int isMenuOpen: 0xB0F74C;
@@ -59,7 +59,7 @@ state("dsda-doom", "dsda-doom_0.29.0") {
 
 state("dsda-doom", "dsda-doom_0.28.3") {
     int gametic: 0x96CA90;
-    int gamestate: 0x71FEF0;
+    int gamestate: 0x71FEF0;    
     int map: 0x71D114;
     int attempt: 0x810AD0;
     int isMenuOpen: 0x98E7DC;
@@ -80,7 +80,7 @@ state("woof", "woof_64_16.0.0") {
 
 state("woof", "woof_32_16.0.0") {
     int gametic: 0x9E5D34;
-    int gamestate: 0x7932DC;
+    int gamestate: 0x76A0DC;
     int map: 0x9E8C64;
     int attempt: 0x91EE0C;
     int isMenuOpen: 0x91E3C0;
@@ -127,7 +127,7 @@ init
     
     // woof logic block
     else if (process_name == "woof.exe") {
-        if (memory_size == "bcd000")        // WHY SAME AS dsda-doom, coincidence????
+        if (memory_size == "bcd000")
             version = "woof_64_16.0.0";
         if (memory_size == "a5d000")
             version = "woof_32_16.0.0";
