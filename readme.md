@@ -1,24 +1,19 @@
 # Doom SourcePort Autosplitter for LiveSplit
 
 This repository provides an autosplitter for [LiveSplit](http://livesplit.org/) that works with modern Doom SourcePorts.
-Note: the autosplitter will autodetect the SourcePort in use and the specific version of that SourcePort. However, the autosplitter will only work with the specific versions of SourcePorts that it has configuration information for. Currently, the autosplitter supports the follows SourcePorts and versions:
+Note: the autosplitter will autodetect the SourcePort in use and the specific version of that SourcePort. However, the autosplitter will only work with the specific versions of SourcePorts that it has configuration information for. Currently, the autosplitter supports the follows SourcePorts and versions only:
 
-[dsda-doom](https://github.com/dsda-org/dsda-doom) - versions:
-+ 0.30.1
-+ 0.30.0
-+ 0.29.4
-+ 0.29.3
-+ 0.29.0
-+ 0.28.3
-
-[woof](https://github.com/fabiangreffrath/woof) - versions:
-+ 16.0.0 (Win64 & Win32)
-
-[nyan-doom](https://github.com/andrikpowell/nyan-doom/) - version:
-+ 1.6.2
+| [dsda-doom](https://github.com/dsda-org/dsda-doom) | [woof](https://github.com/fabiangreffrath/woof) | [nyan-doom](https://github.com/andrikpowell/nyan-doom/) |
+| :---: | :---: | :---: |
+| 0.30.1 | 16.0.0 Win64 | 1.6.2 |
+| 0.30.0 | 16.0.0 Win32 |  |
+| 0.29.4 |  |  |
+| 0.29.3 |  |  |
+| 0.29.0 |  |  |
+| 0.28.3 |  |  |
 
 ## Usage
-1. Download [doom-SourcePort-Autosplitter.asl](https://raw.githubusercontent.com/Krankdud/dsda-doom-autosplitter/main/Doom-SourcePort-Autosplitter.asl)
+1. Download [Doom-SourcePort-Autosplitter.asl](https://raw.githubusercontent.com/Krankdud/dsda-doom-autosplitter/main/Doom-SourcePort-Autosplitter.asl)
 2. Add the *Scriptable Auto Splitter* component to your layout
 3. Set the script path for the auto splitter component to where Doom-SourcePort-Autosplitter.asl is located
 4. Set LiveSplit to compare against game time
@@ -27,7 +22,9 @@ I recommend not showing milliseconds on your timer or splits. The auto splitter 
 so it matches movie runs.
 
 <details>
-<summary>## Updating the autosplitter</summary>
+<summary>Updating the Autosplitter</summary>
+
+## Updating the autosplitter
 For the autosplitter to be compatible with a specific release of a SourcePort the autosplitter script must contain the configuration information associated with that release. This section provides information about how to update the autosplitter to work with additional SourcePort versions. This is achieved by updating two key sections of the Doom-SourcePort-Autosplitter.asl file, namely:
 1. State Block Definition - Adding the associated state block for the new SourcePort verion (providing the memory addresses for that version)
 2. Version Detection - Adding the SourcePort memory size and updating the associated logic to enable auto-detection of the added SourcePort version
@@ -96,6 +93,7 @@ This contains the following cheat table files:
 + nyan-doom_1.6.2.CT
 + woof_32_16.0.0.CT
 + woof_64_16.0.0.CT
+
 Note: the memory addresses used in the latest state definitons are appended with an * in their respective descriptions.
 
 ### Adding Version Detection
@@ -115,14 +113,10 @@ Each version of a SourcePort requires the associated version logic to be present
 </details>
 
 <details>
-<summary>## Testing</summary>
-Any changes to the autosplitter script should be tested to ensure basic functionality is maintained.
+<summary>Testing the Autosplitter</summary>
 
-### Testing in LiveSplit
-A helpful asl script was created that prints out various variables from memory addresses of interest. This was very valuable in tracking down recent issues by printing the gamestate variables for 20 subsequent loops, once triggered. This can be easily adapted to help investigate issues with other variables.
-It is located in the folder: \dsda-doom-autosplitter\Testing
-The test script file is called:
-+ Testing_Script.asl
+## Testing
+Any changes to the autosplitter script should be tested to ensure basic functionality is maintained.
 
 ### Demo Playback Testing
 In order to test any updates to the .asl file one way to check basic functionality is to playback fullgame demos and check the timings match what is expected. In order to support such testing some files have been provided in the repository, in a folder called testing, namely:
@@ -180,29 +174,38 @@ Apart from Demo Playback Testing it may be helpful to undertake general sandpit 
 + Intermission - ensure the timer stops on the end of map intermission screen and continues on the subsequent map
 + Attempt - Restart a run on the first map and check that LiveSplit resets the timer to zero
 Note: testing is aimed at testing the autosplitter functionality and not LiveSplit itself.
+
+### Testing in LiveSplit
+A helpful asl script was created that prints out various variables from memory addresses of interest. This was very valuable in tracking down recent issues by printing the gamestate variables for 20 subsequent loops, once triggered. This can be easily adapted to help investigate issues with other variables.
+It is located in the folder: \dsda-doom-autosplitter\Testing
+The test script file is called:
++ Testing_Script.asl
 </details>
 
 <details>
-<summary>## Bugs / Issues / Feature Requests</summary>
-Please raise features as issues in the project Github Repository.
+<summary>Bugs / Issues / Feature Requests</summary>
+    
+## Bugs / Issues / Feature Requests
+Please raise feature requests or notify of any issues or bugs as issues in the project Github Repository.
 
-If bugs or issues are encountered in the use of the autosplitter please report them to ensure they can be assessed and remedied.
+These are essential to ensure that Autosplitter remains relevant, up to date and that any issues can be investigated and remedied.
 In reporting any issues please include:
 
-| :---: | :--- | :--- |
-| 1.    | Autosplitter Version | The Version number of the autosplitter script used (this is contained in the header of the Doom-SourcePort-Autosplitter.asl). If none is present please provide the file size |
-| 2.    | SourcePort Used | The SourcePort used (e.g., dsda-doom, woof, nyan-doom, crispy-doom). Note: please ensure it is a compatible version from the list in the associated readme file |
-| 3.    | SourcePort Version | The version of the SourcePort used (e.g., 0.30.1, 1.6.2) |
-| 4.    | LiveSplit Version | The version of LiveSplit used (e.g., 1.8.37) |
-| 5.    | Background | A brief description of what happened - the setup you were using, SourcePort launch commands, how it was progressing, what when wrong, anthing additional you noticed, etc.  |
-| 6.    | Additional Info | Any additional supporting information, e.g., a demo file of the run that glitched (this would be particularly helpful), what WAD was in use, any unusual settings or tools in use, etc.? |
+| # | Info Type | Description |
+| :---: | :---                       | :--- |
+| 1.     | Autosplitter Version       | The Version number of the autosplitter script used (this is contained in the header of the Doom-SourcePort-Autosplitter.asl). If none is present please provide the file size |
+| 2.    | SourcePort Used            | The SourcePort used (e.g., dsda-doom, woof, nyan-doom, crispy-doom). Note: please ensure it is a compatible version from the list in the associated readme file |
+| 3.     | SourcePort Version         | The version of the SourcePort used (e.g., 0.30.1, 1.6.2) |
+| 4.     | LiveSplit Version          | The version of LiveSplit used (e.g., 1.8.37) |
+| 5.     | Background                 | A brief description of what happened - the setup you were using, SourcePort launch commands, how it was progressing, what when wrong, anything additional you noticed, etc.  |
+| 6.     | Additional Info            | Any additional supporting information, e.g., a demo file of the run that glitched (this would be particularly helpful), what WAD was in use, any unusual settings or tools in use, etc.? |
 
-## ASL and Troubleshooting
+### ASL and Troubleshooting
 This section provide a brief overview of the functional blocks in the ASL code as well as a guide on what variables may be linked to issues that are present. 
 
-### Intro to ASL Blocks
-| asl block             | Description       |
-| :---                  |     :---:         |
+#### Intro to ASL Blocks
+| asl block | Description |
+| :---: | :--- |
 | startup | This block is executed a single time when the asl script is first loaded, i.e., when the game process is detected |
 | start | This is executed on every loop until it evaluates to True and the LiveSplit timer is started. This contains the start logic |
 | init | This runs once when the game process is picked up by LiveSplit. The game dependent logic can be set here |
@@ -212,7 +215,7 @@ This section provide a brief overview of the functional blocks in the ASL code a
 | isLoading | This is evaluated to determine if the game should pause a timer as it is on a loading or similar screen. This is not required here as Doom's gametic timer pauses when the game pauses (e.g., menu or pause activation). This is often always set to return True as that pauses the LiveSplit internal clock, i.e., indicates it is on a loading screen |
 | onReset | This block is executed once, immediately after the run is reset |
 
-### Timing Data
+#### Timing Data
 The script uses the following LiveSlit timing variables and approach to tracking elapsed time.
 
 The script starts reading the gametic value (current.gametic) from memory - this can be converted to seconds by dividing by the games tic rate, e.g., current map time is current.gametic / 35. When a split is activated this time is added to a global timer vars.totalGameTime as gametic resets for the new map.
@@ -220,7 +223,7 @@ The script starts reading the gametic value (current.gametic) from memory - this
 2. current.gametic - This encodes the elapsed time in the current map (as tics). The number of seconds in the current map is current.gametic / 35 as Doom logic operates at 35 tics/second.
 3. vars.totalGameTime + current.gametic / 35 represents the total elapsed game time (the time from starting the run to the where the player is in the present map).
 
-### Troubleshooting
+#### Troubleshooting
 This section may help point in the right direction if issues are encountered, particularly if new memory addresses are causing unexpected issues.
 
 | Symptom          | Related Variables | Rationale |
