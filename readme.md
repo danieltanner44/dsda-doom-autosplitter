@@ -3,14 +3,14 @@
 This repository provides an autosplitter for [LiveSplit](http://livesplit.org/) that works with modern Doom SourcePorts.
 Note: the autosplitter will autodetect the SourcePort in use and the specific version of that SourcePort. However, the autosplitter will only work with the specific versions of SourcePorts that it has configuration information for. Currently, the autosplitter supports the follows SourcePorts and versions only:
 
-| [dsda-doom](https://github.com/dsda-org/dsda-doom) | [woof](https://github.com/fabiangreffrath/woof) | [nyan-doom](https://github.com/andrikpowell/nyan-doom/) |
+| [dsda-doom](https://github.com/dsda-org/dsda-doom) | [woof](https://github.com/fabiangreffrath/woof) | [nyan-doom](https://github.com/andrikpowell/nyan-doom/) | [crispy-doom](https://github.com/fabiangreffrath/crispy-doom) |
 | :---: | :---: | :---: |
-| 0.30.1 | 16.0.0 Win64 | 1.6.2 |
-| 0.30.0 | 16.0.0 Win32 |  |
-| 0.29.4 |  |  |
-| 0.29.3 |  |  |
-| 0.29.0 |  |  |
-| 0.28.3 |  |  |
+| 0.30.1 | 16.0.0 Win64 | 1.6.2 | 7.2.0 |
+| 0.30.0 | 16.0.0 Win32 |  |  |
+| 0.29.4 |  |  |  |
+| 0.29.3 |  |  |  |
+| 0.29.0 |  |  |  |
+| 0.28.3 |  |  |  |
 
 ## Usage
 1. Download [Doom-SourcePort-Autosplitter.asl](https://github.com/danieltanner44/dsda-doom-autosplitter/blob/main/Doom-SourcePort-Autosplitter.asl)
@@ -93,6 +93,7 @@ This contains the following cheat table files:
 + nyan-doom_1.6.2.CT
 + woof_32_16.0.0.CT
 + woof_64_16.0.0.CT
++ crispy-doom_7.2.0.CT
 
 Note: the memory addresses used in the latest state definitons are appended with an * in their respective descriptions.
 
@@ -159,6 +160,8 @@ To undertake demo playback testing do the following:
 + woof: "woof -iwad doom2.wad -playdemo 30uv7128.lmp"
 + nyan-doom: "nyan-doom -iwad doom.wad -playdemo ud1allm7653.lmp"
 + nyan-doom: "nyan-doom -iwad doom2.wad -playdemo 30uv7128.lmp"
++ crispy-doom: "crispy-doom -iwad doom.wad -playdemo ud1allm7653.lmp"
++ crispy-doom: "crispy-doom -iwad doom2.wad -playdemo 30uv7128.lmp"
 Note: the doom.wad / doom2.wad and the ud1allm7653.lmp / 30uv7128.lmp demo files need to be either in the SourcePort root directory or full paths must be used.
 6. As the demo plays check that the splits for each map match those recorded in the Test Results file (D1-D1ALL_Test_Data.txt / D2-D2ALL_Test_Data.txt). In particular, check that the total demo time at the end matches, i.e., 01:16:53 or 01:11:28 (HH:MM:SS).
 Note: to speed up this process the game speed can be increased (up to 10,000 in dsda-doom and nyan-doom or 1,000 in woof). It would also be worth toggling the menu / pause screens to check that once active the timer stops as expected and the map splits are unaffected.
