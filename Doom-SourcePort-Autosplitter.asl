@@ -99,6 +99,18 @@ state("nyan-doom", "nyan-doom_1.6.2") {
     int isDemoPlaying: 0xA60CE4;
 }
 
+// =============================
+//  crispy-doom State Definitions
+// =============================
+state("crispy-doom", "crispy-doom_7.2.0") {
+    int gametic: 0x127EF0;
+    int gamestate: 0x85660;
+    int map: 0x1C495C;
+    int attempt: 0x1C4990;
+    int isMenuOpen: 0x1C3C44;
+    int isDemoPlaying: 0x1C41D4;
+}
+
 init
 { 
 	// Autodetect source-port and its version based on process name and its memory size
@@ -138,6 +150,12 @@ init
         if (memory_size == "b46000")
             version = "nyan-doom_1.6.2";
         }
+
+    // crispy-doom logic block
+    else if (process_name == "crispy-doom.exe") {
+        if (memory_size == "3c5000")
+            version = "crispy-doom_7.2.0";
+        } 
 
     print(process_name + " version: " + version + " with memory size: " + memory_size + " detected.");
 
