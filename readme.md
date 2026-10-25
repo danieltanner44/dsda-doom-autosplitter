@@ -4,7 +4,7 @@ This repository provides an autosplitter for [LiveSplit](http://livesplit.org/) 
 Note: the autosplitter will autodetect the SourcePort in use and the specific version of that SourcePort. However, the autosplitter will only work with the specific versions of SourcePorts that it has configuration information for. Currently, the autosplitter supports the follows SourcePorts and versions only:
 
 | [dsda-doom](https://github.com/dsda-org/dsda-doom) | [woof](https://github.com/fabiangreffrath/woof) | [nyan-doom](https://github.com/andrikpowell/nyan-doom/) | [crispy-doom](https://github.com/fabiangreffrath/crispy-doom) |
-| :---: | :---: | :---: |
+| :---: | :---: | :---: | :---: |
 | 0.30.1 | 16.0.0 Win64 | 1.6.2 | 7.2.0 |
 | 0.30.0 | 16.0.0 Win32 |  |  |
 | 0.29.4 |  |  |  |
