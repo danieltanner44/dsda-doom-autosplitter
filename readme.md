@@ -125,6 +125,7 @@ In order to test any updates to the .asl file one way to check basic functionali
 
 #### Doom 1 Testing
 The related files are in the folder: \dsda-doom-autosplitter\Testing\D1ALL
+
 The included files are:
 1. ud1allm7653.lmp - A demo file for test purposes, which contains a complete D1ALL UV-Max demo run of The Ultimate Doom (4 Episodes - uses the -chain_episodes command)
 2. D1-D1ALL_Layout.lsl - A LiveSplit layout file for an D1ALL of The Ultimate Doom
@@ -133,6 +134,7 @@ The included files are:
 
 #### Doom 2 Testing
 The related files are in the folder: \dsda-doom-autosplitter\Testing\D2ALL
+
 The included files are:
 1. 30uv7128.lmp - A demo file for test purposes, which contains a complete D2ALL UV-Max demo run of Doom II
 2. D2-D2ALL_Layout.lsl - A LiveSplit layout file for an D2ALL of Doom II
@@ -141,6 +143,7 @@ The included files are:
 
 #### Heretic Testing
 The related files are in the folder: \dsda-doom-autosplitter\Testing\HERALL
+
 The included files are:
 1. h1sp-517.lmp - A demo file for test purposes, which contains an Episode 1 SM-Speed demo run of Heretic
 2. Heretic-HERALL_Layout.lsl - A LiveSplit layout file for a HERALL of Heretic
@@ -162,31 +165,34 @@ To undertake demo playback testing do the following:
 3. Load the LiveSplit Splits file: In LiveSplit use "Open Splits" -> "From File" and select the test splits file
 4. Update LiveSplit to point to the new .asl file that is under test. For this do the following in LiveSplit: "Edit Layout" -> "Add" -> "Control" -> "Scriptable Auto Splitter" -> Point it at the new .asl file.
 5. Now launch the SourcePort you are testing with, where it is set to playback the test demo file. The commands are similar for different SourcePorts, open a command window in the SourcePort root folder and excute the relevant command, something like:
-+ dsda-doom: "dsda-doom -iwad doom.wad -playdemo ud1allm7653.lmp"
-+ dsda-doom: "dsda-doom -iwad doom2.wad -playdemo 30uv7128.lmp"
-+ dsda-doom: "dsda-doom -iwad heretic.wad -playdemo h1sp-517.lmp"
-+ woof: "woof -iwad doom.wad -playdemo ud1allm7653.lmp"
-+ woof: "woof -iwad doom2.wad -playdemo 30uv7128.lmp"
-+ nyan-doom: "nyan-doom -iwad doom.wad -playdemo ud1allm7653.lmp"
-+ nyan-doom: "nyan-doom -iwad doom2.wad -playdemo 30uv7128.lmp"
-+ nyan-doom: "nyan-doom -iwad heretic.wad -playdemo h1sp-517.lmp"
-+ crispy-doom: "crispy-doom -iwad doom.wad -playdemo ud1allm7653.lmp"
-+ crispy-doom: "crispy-doom -iwad doom2.wad -playdemo 30uv7128.lmp"
-+ crispy-heretic: "crispy-heretic -iwad heretic.wad -playdemo h1sp-517.lmp"
-Note: the doom.wad / doom2.wad / heretic.wad and the ud1allm7653.lmp / 30uv7128.lmp / h1sp-517.lmp demo files need to be either in the SourcePort root directory or full paths must be used.
+    + dsda-doom: "dsda-doom -iwad doom.wad -playdemo ud1allm7653.lmp"
+    + dsda-doom: "dsda-doom -iwad doom2.wad -playdemo 30uv7128.lmp"
+    + dsda-doom: "dsda-doom -iwad heretic.wad -playdemo h1sp-517.lmp"
+    + woof: "woof -iwad doom.wad -playdemo ud1allm7653.lmp"
+    + woof: "woof -iwad doom2.wad -playdemo 30uv7128.lmp"
+    + nyan-doom: "nyan-doom -iwad doom.wad -playdemo ud1allm7653.lmp"
+    + nyan-doom: "nyan-doom -iwad doom2.wad -playdemo 30uv7128.lmp"
+    + nyan-doom: "nyan-doom -iwad heretic.wad -playdemo h1sp-517.lmp"
+    + crispy-doom: "crispy-doom -iwad doom.wad -playdemo ud1allm7653.lmp"
+    + crispy-doom: "crispy-doom -iwad doom2.wad -playdemo 30uv7128.lmp"
+    + crispy-heretic: "crispy-heretic -iwad heretic.wad -playdemo h1sp-517.lmp"
+      
+    Note: the doom.wad / doom2.wad / heretic.wad and the ud1allm7653.lmp / 30uv7128.lmp / h1sp-517.lmp demo files need to be either in the SourcePort root directory or full paths must be used.
 6. As the demo plays check that the splits for each map match those recorded in the Test Results file (D1-D1ALL_Test_Data.txt / D2-D2ALL_Test_Data.txt / Heretic-HERALL_Test_Data.txt). In particular, check that the total demo time at the end matches, i.e., 01:16:53 or 01:11:28 (HH:MM:SS).
-Note: to speed up this process the game speed can be increased (up to 10,000 in dsda-doom and nyan-doom or 1,000 in woof). It would also be worth toggling the menu / pause screens to check that once active the timer stops as expected and the map splits are unaffected.
+
+    Note: to speed up this process the game speed can be increased (up to 10,000 in dsda-doom and nyan-doom or 1,000 in woof). It would also be worth toggling the menu / pause screens to check that once active the timer stops as expected and the map splits are unaffected.
 7. Finally, the following two checks must be undertaken as they are not covered by D1ALL, D2ALL or HERALL playback tests:
 + The attempt variable - testing the reset function. Resetting Doom should also reset the timer and LiveSplit should restart on initial segment (when recording a demo)
 + The isMenuOpen variable - the LiveSplit counter should stop incrementing when Doom pauses or menu is open. Although this is inherent to Doom but might be worth checking anyway as menu actions are not recorded in demos
 
 #### General Testing
 Apart from Demo Playback Testing it may be helpful to undertake general sandpit testing steps to explore that new changes are performing as expected. The following are good general areas to cover:
-+ Map ID - Check that LiveSplit displays the correct map and that maps advance as expected as each is complete
-+ Menu - Press Esc to call the in-game menu - ensure the timer stops when on the menu screen and continues once the menu is closed again
-+ Pause - Press Pause to pause the game - ensure the timer stops when on the pause screen and continues once the game is unpaused again
-+ Intermission - ensure the timer stops on the end of map intermission screen and continues on the subsequent map
-+ Attempt - Restart a run on the first map and check that LiveSplit resets the timer to zero
+    + Map ID - Check that LiveSplit displays the correct map and that maps advance as expected as each is complete
+    + Menu - Press Esc to call the in-game menu - ensure the timer stops when on the menu screen and continues once the menu is closed again
+    + Pause - Press Pause to pause the game - ensure the timer stops when on the pause screen and continues once the game is unpaused again
+    + Intermission - ensure the timer stops on the end of map intermission screen and continues on the subsequent map
+    + Attempt - Restart a run on the first map and check that LiveSplit resets the timer to zero
+    
 Note: testing is aimed at testing the autosplitter functionality and not LiveSplit itself.
 
 ### Testing in LiveSplit
