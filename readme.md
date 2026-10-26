@@ -3,14 +3,14 @@
 This repository provides an autosplitter for [LiveSplit](http://livesplit.org/) that works with modern Doom SourcePorts.
 Note: the autosplitter will autodetect the SourcePort in use and the specific version of that SourcePort. However, the autosplitter will only work with the specific versions of SourcePorts that it has configuration information for. Currently, the autosplitter supports the follows SourcePorts and versions only:
 
-| [dsda-doom](https://github.com/dsda-org/dsda-doom) | [woof](https://github.com/fabiangreffrath/woof) | [nyan-doom](https://github.com/andrikpowell/nyan-doom/) | [crispy-doom](https://github.com/fabiangreffrath/crispy-doom) |
-| :---: | :---: | :---: | :---: |
-| 0.30.1 | 16.0.0 Win64 | 1.6.2 | 7.2.0 |
-| 0.30.0 | 16.0.0 Win32 |  |  |
-| 0.29.4 |  |  |  |
-| 0.29.3 |  |  |  |
-| 0.29.0 |  |  |  |
-| 0.28.3 |  |  |  |
+| [dsda-doom](https://github.com/dsda-org/dsda-doom) | [woof](https://github.com/fabiangreffrath/woof) | [nyan-doom](https://github.com/andrikpowell/nyan-doom/) | [crispy-doom](https://github.com/fabiangreffrath/crispy-doom) | [crispy-heretic](https://github.com/fabiangreffrath/crispy-doom) |
+| :---: | :---: | :---: | :---: | :---: |
+| 0.30.1 | 16.0.0 Win64 | 1.6.2 | 7.2.0 | 7.2.0 |
+| 0.30.0 | 16.0.0 Win32 |  |  |  |
+| 0.29.4 |  |  |  |  |
+| 0.29.3 |  |  |  |  |
+| 0.29.0 |  |  |  |  |
+| 0.28.3 |  |  |  |  |
 
 ## Usage
 1. Download [Doom-SourcePort-Autosplitter.asl](https://github.com/danieltanner44/dsda-doom-autosplitter/blob/main/Doom-SourcePort-Autosplitter.asl)
@@ -94,6 +94,7 @@ This contains the following cheat table files:
 + woof_32_16.0.0.CT
 + woof_64_16.0.0.CT
 + crispy-doom_7.2.0.CT
++ crispy-heretic_7.2.0.CT
 
 Note: the memory addresses used in the latest state definitons are appended with an * in their respective descriptions.
 
@@ -123,7 +124,6 @@ Any changes to the autosplitter script should be tested to ensure basic function
 In order to test any updates to the .asl file one way to check basic functionality is to playback fullgame demos and check the timings match what is expected. In order to support such testing some files have been provided in the repository, in a folder called testing, namely:
 
 #### Doom 1 Testing
-Testing Files are located in the folder: /Testing/D1ALL
 The related files are in the folder: \dsda-doom-autosplitter\Testing\D1ALL
 The included files are:
 1. ud1allm7653.lmp - A demo file for test purposes, which contains a complete D1ALL UV-Max demo run of The Ultimate Doom (4 Episodes - uses the -chain_episodes command)
@@ -132,13 +132,21 @@ The included files are:
 4. D1-D1ALL_Test_Data.txt - A Test Results file of the expected timing splits and total time that should be captured, with some additional details about the origins of the run itself
 
 #### Doom 2 Testing
-Testing Files are located in the folder: /Testing/D2ALL
 The related files are in the folder: \dsda-doom-autosplitter\Testing\D2ALL
 The included files are:
 1. 30uv7128.lmp - A demo file for test purposes, which contains a complete D2ALL UV-Max demo run of Doom II
 2. D2-D2ALL_Layout.lsl - A LiveSplit layout file for an D2ALL of Doom II
 3. D2-D2ALL_Splits.lss - A LiveSplit splits definition file for Doom II
 4. D2-D2ALL_Test_Data.txt - A Test Results file of the expected timing splits and total time that should be captured, with some additional details about the origins of the run itself
+
+#### Heretic Testing
+The related files are in the folder: \dsda-doom-autosplitter\Testing\HERALL
+The included files are:
+1. h1sp-517.lmp - A demo file for test purposes, which contains an Episode 1 SM-Speed demo run of Heretic
+2. Heretic-HERALL_Layout.lsl - A LiveSplit layout file for a HERALL of Heretic
+3. Heretic-HERALL_Splits.lss - A LiveSplit splits definition file for Heretic
+4. Heretic-HERALL_Test_Data.txt - A Test Results file of the expected timing splits and total time that should be captured, with some additional details about the origins of the run itself
+Note: Heretic is supported by dsda-doom, nyan-doom and crispy-heretic only.
 
 #### Teleporter Bug Testing
 In testing the implementations for certain SourcePorts a phantom split trigger in LiveSplit was encountered. Following an investigation it was found that one of the gamestate memory addresses in dsda-doom flips on teleporting and can lead to a phantom split (if LiveSplit polls memory at that time). To provide a rigorous testcase for this a map was created with a single teleport and a 50+min demo created of continuous teleporting. This demo can be played back in order to provoke any associated gamestate values issues.
@@ -156,16 +164,19 @@ To undertake demo playback testing do the following:
 5. Now launch the SourcePort you are testing with, where it is set to playback the test demo file. The commands are similar for different SourcePorts, open a command window in the SourcePort root folder and excute the relevant command, something like:
 + dsda-doom: "dsda-doom -iwad doom.wad -playdemo ud1allm7653.lmp"
 + dsda-doom: "dsda-doom -iwad doom2.wad -playdemo 30uv7128.lmp"
++ dsda-doom: "dsda-doom -iwad heretic.wad -playdemo h1sp-517.lmp"
 + woof: "woof -iwad doom.wad -playdemo ud1allm7653.lmp"
 + woof: "woof -iwad doom2.wad -playdemo 30uv7128.lmp"
 + nyan-doom: "nyan-doom -iwad doom.wad -playdemo ud1allm7653.lmp"
 + nyan-doom: "nyan-doom -iwad doom2.wad -playdemo 30uv7128.lmp"
++ nyan-doom: "nyan-doom -iwad heretic.wad -playdemo h1sp-517.lmp"
 + crispy-doom: "crispy-doom -iwad doom.wad -playdemo ud1allm7653.lmp"
 + crispy-doom: "crispy-doom -iwad doom2.wad -playdemo 30uv7128.lmp"
-Note: the doom.wad / doom2.wad and the ud1allm7653.lmp / 30uv7128.lmp demo files need to be either in the SourcePort root directory or full paths must be used.
-6. As the demo plays check that the splits for each map match those recorded in the Test Results file (D1-D1ALL_Test_Data.txt / D2-D2ALL_Test_Data.txt). In particular, check that the total demo time at the end matches, i.e., 01:16:53 or 01:11:28 (HH:MM:SS).
++ crispy-heretic: "crispy-heretic -iwad heretic.wad -playdemo h1sp-517.lmp"
+Note: the doom.wad / doom2.wad / heretic.wad and the ud1allm7653.lmp / 30uv7128.lmp / h1sp-517.lmp demo files need to be either in the SourcePort root directory or full paths must be used.
+6. As the demo plays check that the splits for each map match those recorded in the Test Results file (D1-D1ALL_Test_Data.txt / D2-D2ALL_Test_Data.txt / Heretic-HERALL_Test_Data.txt). In particular, check that the total demo time at the end matches, i.e., 01:16:53 or 01:11:28 (HH:MM:SS).
 Note: to speed up this process the game speed can be increased (up to 10,000 in dsda-doom and nyan-doom or 1,000 in woof). It would also be worth toggling the menu / pause screens to check that once active the timer stops as expected and the map splits are unaffected.
-7. Finally, the following two checks must be undertaken as they are not covered by D1ALL or D2ALL playback tests:
+7. Finally, the following two checks must be undertaken as they are not covered by D1ALL, D2ALL or HERALL playback tests:
 + The attempt variable - testing the reset function. Resetting Doom should also reset the timer and LiveSplit should restart on initial segment (when recording a demo)
 + The isMenuOpen variable - the LiveSplit counter should stop incrementing when Doom pauses or menu is open. Although this is inherent to Doom but might be worth checking anyway as menu actions are not recorded in demos
 

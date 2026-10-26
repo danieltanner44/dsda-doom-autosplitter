@@ -111,6 +111,18 @@ state("crispy-doom", "crispy-doom_7.2.0") {
     int isDemoPlaying: 0x1C41D4;
 }
 
+// =================================
+//  crispy-heretic State Definitions
+// =================================
+state("crispy-heretic", "crispy-heretic_7.2.0") {
+    int gametic: 0xE5EF0;
+    int gamestate: 0x17B1CC;
+    int map: 0x17B1BC;
+    int attempt: 0x17B1D4;
+    int isMenuOpen: 0x17B1B4;
+    int isDemoPlaying: 0x17A868;
+}
+
 init
 { 
 	// Autodetect source-port and its version based on process name and its memory size
@@ -156,6 +168,12 @@ init
         if (memory_size == "3c5000")
             version = "crispy-doom_7.2.0";
         } 
+
+    // crispy-heretic logic block
+    else if (process_name == "crispy-heretic.exe") {
+        if (memory_size == "374000")
+            version = "crispy-heretic_7.2.0";
+        }
 
     print(process_name + " version: " + version + " with memory size: " + memory_size + " detected.");
 

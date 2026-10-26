@@ -1,0 +1,24 @@
+This test file was created using the Episode 1 SM-Speed UV-Max by Insomnia, which can be found here:
+https://dsdarchive.com/wads/heretic?level=Movies
+
+The direct donwload link to this demo submission is here:
+https://dsdarchive.com/files/demos/heretic/93279/h1sp-517.zip
+
+The demo filename is:
+h1sp-517.lmp
+
+The map times and overall time are shown below: 
+
+====================================
+Level               Map   |  Time  |
+====================================
+The Docks           E1M1  |  0:27  |
+The Dungeons        E1M2  |  1:10  |
+The Gatehouse       E1M3  |  0:39  |
+The Guard Tower     E1M4  |  0:41  |
+The Citadel         E1M5  |  0:56  |
+The Cathedral       E1M6  |  0:22  |
+The Crypts          E1M7  |  0:35  |
+Hell's Maw          E1M8  |  0:27  |
+
+Total Time                |  5:17  |
