@@ -1,5 +1,5 @@
 // ==================================================
-// Doom SourcePort Autosplitter Script - Version: 1.1
+// Doom SourcePort Autosplitter Script - Version: 1.2
 // ==================================================
 // Define states to provide memory addresses for different sourceport versions
 // To allow compatibility for a new or additional versions of a sourceport an associated state block must be added 
