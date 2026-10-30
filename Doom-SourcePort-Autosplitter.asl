@@ -1,5 +1,5 @@
 // ==================================================
-// Doom SourcePort Autosplitter Script - Version: 1.2
+// Doom SourcePort Autosplitter Script - Version: 1.3
 // ==================================================
 // Define states to provide memory addresses for different sourceport versions
 // To allow compatibility for a new or additional versions of a sourceport an associated state block must be added 
@@ -147,36 +147,44 @@ init
             version = "dsda-doom_0.30.0";
         else if (memory_size == "a7f000")
             version = "dsda-doom_0.30.1";
+        else version = "UNKNOWN";
         }
     
     // woof logic block
     else if (process_name == "woof.exe") {
         if (memory_size == "bcd000")
             version = "woof_64_16.0.0";
-        if (memory_size == "a5d000")
+        else if (memory_size == "a5d000")
             version = "woof_32_16.0.0";
+        else version = "UNKNOWN";
         }
     
     // nyan-doom logic block
     else if (process_name == "nyan-doom.exe") {
         if (memory_size == "b46000")
             version = "nyan-doom_1.6.2";
+        else version = "UNKNOWN";
         }
 
     // crispy-doom logic block
     else if (process_name == "crispy-doom.exe") {
         if (memory_size == "3c5000")
             version = "crispy-doom_7.2.0";
+        else version = "UNKNOWN";
         } 
 
     // crispy-heretic logic block
     else if (process_name == "crispy-heretic.exe") {
         if (memory_size == "374000")
             version = "crispy-heretic_7.2.0";
+        else version = "UNKNOWN";
         }
 
     print(process_name + " version: " + version + " with memory size: " + memory_size + " detected.");
-
+    // If valid Sourceport found but not a compatible version then show error
+    if (version == "UNKNOWN") {
+        MessageBox.Show("A compatible version of the " + process_name.Substring(0, process_name.Length - 4) + " sourceport has not been found! \n\nCheck list of supported versions in the readme file and consider raising a request for this version to be added. \n\nFor further information see the GitHub repository: \nhttps://github.com/danieltanner44/dsda-doom-autosplitter", "Autosplitter Error - Unsupported Sourceport Version", MessageBoxButtons.OK, MessageBoxIcon.Error);
+    }
 }
 
 startup {
