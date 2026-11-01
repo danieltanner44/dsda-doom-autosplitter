@@ -1,13 +1,14 @@
 // ==================================================
 // Doom SourcePort Autosplitter Script - Version: 1.3
 // ==================================================
+// This script acts as an autosplitter for LiveSplit when used with compatible Doom sourceports.
+// The autosplitter can operate in either RTA (realtime) or IGT (gametime) modes.
+
+// =================
+// State Definitions
+// =================
 // Define states to provide memory addresses for different sourceport versions
 // To allow compatibility for a new or additional versions of a sourceport an associated state block must be added 
-
-// ===========================
-// dsda-doom State Definitions
-//   [Doom and Doom II Only]
-// ===========================
 
 // ===========================
 // dsda-doom State Definitions
@@ -15,55 +16,43 @@
 state("dsda-doom", "dsda-doom_0.30.1") {
     int gametic: 0x9AE3B0;
     int gamestate: 0x763C48;
-    int map: 0x9D2280;
     int attempt: 0x848BE8;
     int isMenuOpen: 0x9CFF8C;
-    int isDemoPlaying: 0x9D2390;
 }
 
 state("dsda-doom", "dsda-doom_0.30.0") {
     int gametic: 0x99A810;
     int gamestate: 0x753B58;
-    int map: 0x750DF4;
     int attempt: 0x730728;
     int isMenuOpen: 0x9BC3EC;
-    int isDemoPlaying: 0x9BE904;
 }
 
 state("dsda-doom", "dsda-doom_0.29.4") {
     int gametic: 0xAEDB90;
     int gamestate: 0x8A3FA8;
-    int map: 0x8A1244;
     int attempt: 0x881728;
     int isMenuOpen: 0xB0F74C;
-    int isDemoPlaying: 0xB11C78;
 }
 
 state("dsda-doom", "dsda-doom_0.29.3") {
     int gametic: 0xB11090;
     int gamestate: 0x88BE90;
-    int map: 0xB34F40;
     int attempt: 0x970B88;
     int isMenuOpen: 0xB32C4C;
-    int isDemoPlaying: 0xB35164;
 }
 
 state("dsda-doom", "dsda-doom_0.29.0") {
     int gametic: 0x97EF70;
     int gamestate: 0x732590;
-    int map: 0x72F7B4;
     int attempt: 0x8182EC;
     int isMenuOpen: 0x9A0B4C;
-    int isDemoPlaying: 0x9A3064;
 }
 
 state("dsda-doom", "dsda-doom_0.28.3") {
     int gametic: 0x96CA90;
     int gamestate: 0x71FEF0;    
-    int map: 0x71D114;
     int attempt: 0x810AD0;
     int isMenuOpen: 0x98E7DC;
-    int isDemoPlaying: 0x990BE8;
 }
 
 // ======================
@@ -72,19 +61,15 @@ state("dsda-doom", "dsda-doom_0.28.3") {
 state("woof", "woof_64_16.0.0") {
     int gametic: 0xB44074;
     int gamestate: 0x8AE408;
-    int map: 0x8E42E8;
     int attempt: 0xA76168;
     int isMenuOpen: 0xA75668;
-    int isDemoPlaying: 0xB47AA0;
 }
 
 state("woof", "woof_32_16.0.0") {
     int gametic: 0x9E5D34;
     int gamestate: 0x76A0DC;
-    int map: 0x9E8C64;
     int attempt: 0x91EE0C;
     int isMenuOpen: 0x91E3C0;
-    int isDemoPlaying: 0x9E9350;
 }
 
 // ===========================
@@ -93,10 +78,8 @@ state("woof", "woof_32_16.0.0") {
 state("nyan-doom", "nyan-doom_1.6.2") {
     int gametic: 0xA3C990;
     int gamestate: 0x7AB2A0;
-    int map: 0x7A6F84;
     int attempt: 0x76F294;
     int isMenuOpen: 0xA5E5AC;
-    int isDemoPlaying: 0xA60CE4;
 }
 
 // =============================
@@ -105,10 +88,8 @@ state("nyan-doom", "nyan-doom_1.6.2") {
 state("crispy-doom", "crispy-doom_7.2.0") {
     int gametic: 0x127EF0;
     int gamestate: 0x85660;
-    int map: 0x1C495C;
     int attempt: 0x1C4990;
     int isMenuOpen: 0x1C3C44;
-    int isDemoPlaying: 0x1C41D4;
 }
 
 // =================================
@@ -117,10 +98,18 @@ state("crispy-doom", "crispy-doom_7.2.0") {
 state("crispy-heretic", "crispy-heretic_7.2.0") {
     int gametic: 0xE5EF0;
     int gamestate: 0x17B1CC;
-    int map: 0x17B1BC;
     int attempt: 0x17B1D4;
     int isMenuOpen: 0x17B1B4;
-    int isDemoPlaying: 0x17A868;
+}
+
+// =================================
+//  crispy-hexen State Definitions
+// =================================
+state("crispy-hexen", "crispy-hexen_7.2.0") {
+    int gametic: 0x38F420;
+    int gamestate: 0x390838;
+    int attempt: 0x390840;
+    int isMenuOpen: 0x1A2214;
 }
 
 init
@@ -131,6 +120,7 @@ init
     // If a compatible version is not detected the default state will be used (the first state with the correct process name)
 	
     string process_name = modules.First().ModuleName;
+    vars.process_name = process_name;
     string memory_size = Convert.ToString(modules.First().ModuleMemorySize, 16);
 	
     // dsda-doom logic block
@@ -180,6 +170,13 @@ init
         else version = "UNKNOWN";
         }
 
+    // crispy-hexen logic block
+    else if (process_name == "crispy-hexen.exe") {
+        if (memory_size == "3cb000")
+            version = "crispy-hexen_7.2.0";
+        else version = "UNKNOWN";
+        }
+
     print(process_name + " version: " + version + " with memory size: " + memory_size + " detected.");
     // If valid Sourceport found but not a compatible version then show error
     if (version == "UNKNOWN") {
@@ -189,7 +186,6 @@ init
 
 startup {
     vars.totalGameTime = 0;
-
     settings.Add("rta_mode", false, "Set splitter for non-demo runs using RTA without load times.");
 }
 
@@ -198,24 +194,22 @@ start {
     if (current.isMenuOpen == 0 && current.gamestate == 0) {
         vars.totalGameTime = 0f;
         // In RTA mode, we need to add one tic every level start because DOOM
-        // doesn't start from tic 0.
         if (settings["rta_mode"]) {
             vars.totalGameTime += 1;
         }
-        
+                
         return true;
     }
 }
 
 split {
-    // Split on level intermission.
-    if (current.gamestate == 1 && old.gamestate == 0) {
-        // In RTA mode, we need to add one tic every level start because DOOM
-        // doesn't start from tic 0.
+    // Split on change of gamestate (intermission or map changes)
+    if (current.gamestate != 0 && old.gamestate == 0) {
+        // In RTA mode we need to add one tic every level start because DOOM
         if (settings["rta_mode"]) {
             vars.totalGameTime += 1;
         }
-        // In demo mode, this is where we add the current level time to the running total.
+        // In IGT mode this is where we add the current level time to the running total.
         else {
             // Use integer division to truncate the ms to match traditional DOOM timing.
             vars.totalGameTime += current.gametic / 35;
@@ -234,28 +228,32 @@ reset {
 }
 
 gameTime {
-    // In RTA mode, we keep a running total using delta time because we can no longer
+    // In RTA mode we keep a running total time using delta time because we can no longer
     // rely solely on the level time (for example, to account for saving/loading). 
     if (settings["rta_mode"]) {
         int delta = current.gametic - old.gametic;
         if (delta < 0) {
             delta = 0;
         }
-
         vars.totalGameTime += delta;
 
         return TimeSpan.FromSeconds(vars.totalGameTime / 35f);
     }
-    // In demo mode, we display the running total + current level time.
-    // Milliseconds are truncated to follow traditional DOOM timing.
+    // In IGT mode we display the running total + current level time
+    // Milliseconds are truncated to follow traditional DOOM timing
     else {
-        // Just return current total during intermissions.
-        // NOTE: Waits one refresh to let the split block run first. 
-        if (current.gamestate != 0 && old.gamestate != 0) {
-            return TimeSpan.FromSeconds(vars.totalGameTime);
-        }
+        if (vars.process_name != "crispy-hexen.exe") {
+            // Just return current total during intermissions.
+            // NOTE: Waits one refresh to let the split block run first. 
+            if (current.gamestate != 0 && old.gamestate != 0) {
+                return TimeSpan.FromSeconds(vars.totalGameTime);
+            }
 
-        return TimeSpan.FromSeconds(vars.totalGameTime + current.gametic / 35);
+            return TimeSpan.FromSeconds(vars.totalGameTime + current.gametic / 35);
+        }
+        else {
+            return TimeSpan.FromSeconds(current.gametic / 35);
+        }
     }
 }
 
